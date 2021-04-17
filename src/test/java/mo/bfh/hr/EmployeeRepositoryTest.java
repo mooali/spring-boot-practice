@@ -1,4 +1,4 @@
-package mo.bfh.jpafirstdemo;
+package mo.bfh.hr;
 
 import mo.bfh.entity.*;
 import mo.bfh.repository.*;

@@ -16,13 +16,13 @@ public class Employee {
     private String name;
     private double salary; //bigDecimal wäre besser, da wir mit double probleme mit der Aufrundung haben können.
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private Department department;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Address address;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "employee_id")
     private Set<Phone> phoneSet = new HashSet<>();;
 

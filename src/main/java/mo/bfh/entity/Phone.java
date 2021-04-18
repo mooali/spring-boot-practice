@@ -12,7 +12,7 @@ public class Phone {
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private PhoneType type;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private Employee employee;
 
 

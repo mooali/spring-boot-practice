@@ -28,6 +28,8 @@ public class EmployeeRepositoryTest {
 
     private Integer employeeSupervisorId;
     private Integer employeeId;
+    private Integer projectId;
+
 
     @BeforeEach
     public void insertTestData() {
@@ -60,8 +62,7 @@ public class EmployeeRepositoryTest {
 
         employeeSupervisorId = employeeSupervisor.getId();
         employeeId = employee1.getId();
-
-        projectRepositroy.saveAndFlush(bookstore);
+        projectId = bookstore.getId();
 
     }
 
@@ -72,5 +73,12 @@ public class EmployeeRepositoryTest {
 
         Optional<Employee> employeeSupervisor = employeeRepository.findById(employeeSupervisorId);
         assertTrue(employeeSupervisor.isPresent());
+    }
+
+    @Test
+    public void findProjects(){
+        Optional<Project> optionalProject = projectRepositroy.findById(projectId);
+        assertTrue(optionalProject.isPresent());
+        
     }
 }

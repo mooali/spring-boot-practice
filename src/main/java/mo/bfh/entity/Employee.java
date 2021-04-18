@@ -16,26 +16,24 @@ public class Employee {
     private String name;
     private double salary; //bigDecimal wäre besser, da wir mit double probleme mit der Aufrundung haben können.
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private Department department;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private Address address;
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "employee_id")
     private Set<Phone> phoneSet = new HashSet<>();;
 
-    @ManyToMany (mappedBy = "employeeSet")
+    @ManyToMany (mappedBy = "employeeSet",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private Set<Project> projectSet = new HashSet<>();;
-
 
     @ManyToOne
     private Employee supervisor;
 
     @OneToMany(mappedBy = "supervisor")
     private Set<Employee> supervise = new HashSet<>();;
-
 
 
     public Employee(String name, double salary) {
@@ -136,6 +134,5 @@ public class Employee {
     public void removePhone(Phone phone){
         phoneSet.remove(phone);
     }
-
 
 }

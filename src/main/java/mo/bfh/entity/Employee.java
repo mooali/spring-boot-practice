@@ -26,8 +26,8 @@ public class Employee {
     @JoinColumn(name = "employee_id")
     private Set<Phone> phoneSet = new HashSet<>();;
 
-    @ManyToMany (mappedBy = "employeeSet",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    private Set<Project> projectSet = new HashSet<>();;
+    @ManyToMany (mappedBy = "employees",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    private Set<Project> projects = new HashSet<>();;
 
     @ManyToOne
     private Employee supervisor;
@@ -93,12 +93,12 @@ public class Employee {
         this.address = address;
     }
 
-    public Set<Project> getProjectSet() {
-        return projectSet;
+    public Set<Project> getProjects() {
+        return projects;
     }
 
-    public void setProjectSet(Set<Project> projectSet) {
-        this.projectSet = projectSet;
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
     }
 
     public Employee getSupervisor() {

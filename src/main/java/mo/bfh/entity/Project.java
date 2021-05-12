@@ -15,6 +15,9 @@ public class Project {
     private Integer id;
     private String name;
 
+    @ManyToMany
+    private Set<Employee> employees = new HashSet<>();
+
 
     public Project() {
     }
@@ -23,10 +26,6 @@ public class Project {
         this.name = name;
     }
 
-    @ManyToMany
-    private Set<Employee> employeeSet = new HashSet<>();
-
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -34,6 +33,7 @@ public class Project {
     public Integer getId() {
         return id;
     }
+
 
     public String getName() {
         return name;

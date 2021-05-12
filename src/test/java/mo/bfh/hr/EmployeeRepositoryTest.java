@@ -54,7 +54,7 @@ public class EmployeeRepositoryTest {
 
         Employee employeeSupervisor = new Employee("Chef", 1000);
         employeeSupervisor.setAddress(address2);
-        employee1.getProjectSet().add(bookstore);
+        employee1.getProjects().add(bookstore);
         employeeSupervisor.addDirect(employee1);
         employee1.addPhone(phone2);
         employeeRepository.saveAndFlush(employeeSupervisor);
@@ -86,5 +86,10 @@ public class EmployeeRepositoryTest {
     @Test
     public void findEmployeeByState(){
         assertTrue(employeeRepository.findByAddressState("BE").isPresent());
+    }
+
+    @Test
+    public void findEmployeeByDept(){
+        assertTrue(employeeRepository.findEmployeesByDepartmentName("IT").isPresent());
     }
 }

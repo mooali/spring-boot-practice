@@ -2,6 +2,7 @@ package mo.bfh.hr;
 
 import mo.bfh.dto.DepartmentDTO;
 import mo.bfh.dto.DepartmentSalaryStatistics;
+import mo.bfh.entity.Department;
 import mo.bfh.entity.Employee;
 import mo.bfh.repository.DepartmentRepository;
 import mo.bfh.repository.EmployeeRepository;
@@ -49,13 +50,14 @@ public class QueryTest {
 
     }
 
+
     @Test
-    public void employeeAvgSalary(){
-        List<DepartmentSalaryStatistics> avg = departmentRepository.avgSalary();
+    public void getAverageSalaryPerDepartment(){
+        TypedQuery<DepartmentSalaryStatistics> query = em.createNamedQuery(Department.AVG_SALARY, DepartmentSalaryStatistics.class);
+        List<DepartmentSalaryStatistics> list = query.getResultList();
 
-        assertEquals(2, avg.size());
-
-        for(DepartmentSalaryStatistics dept : avg){
+        assertEquals(2, list.size());
+        for(DepartmentSalaryStatistics dept : list){
             if(dept.getDepartmentName().equals("IT")){
                 assertEquals(97200.0, dept.getAvgSalary(),0);
             }
@@ -64,7 +66,29 @@ public class QueryTest {
             }
         }
 
+
     }
+
+
+
+    @Test
+    public void getAverageSalaryPerDepartmentAsNamedQueryWithSpringData(){
+        List<DepartmentSalaryStatistics> avg = departmentRepository.avgSalary();
+        assertEquals(2, avg.size());
+        for(DepartmentSalaryStatistics dept : avg){
+            if(dept.getDepartmentName().equals("IT")){
+                assertEquals(97200.0, dept.getAvgSalary(),0);
+            }
+            if(dept.getDepartmentName().equals("HR")){
+                assertEquals(95000.0, dept.getAvgSalary(),0);
+            }
+        }
+    }
+
+
+
+
+
 
 
 

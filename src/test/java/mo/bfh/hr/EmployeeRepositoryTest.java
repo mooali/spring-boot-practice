@@ -84,11 +84,6 @@ public class EmployeeRepositoryTest {
 
 
     @Test
-    public void findEmployeeByState(){
-        assertTrue(employeeRepository.findByAddressState("BE").isPresent());
-    }
-
-    @Test
     public void findEmployeeByDept(){
         assertTrue(employeeRepository.findEmployeesByDepartmentName("IT").isPresent());
     }

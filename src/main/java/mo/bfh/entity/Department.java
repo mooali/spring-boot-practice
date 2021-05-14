@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@Entity
 @NamedQuery(name = Department.AVG_SALARY, query = "select new mo.bfh.dto.DepartmentSalaryStatistics(e.department.name, avg(e.salary))"+
         " from Employee e group by e.department.name")
+@Entity
 public class Department {
 
     public static final String AVG_SALARY = "Department.avgSalary";

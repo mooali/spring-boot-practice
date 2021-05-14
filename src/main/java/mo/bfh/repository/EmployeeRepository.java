@@ -3,6 +3,7 @@ package mo.bfh.repository;
 import mo.bfh.dto.EmployeeDTO;
 import mo.bfh.dto.EmployeeNameWithAddress;
 import mo.bfh.entity.Employee;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,4 +23,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Query("select e.name as name, e.address as address from Employee e")
     List<EmployeeNameWithAddress> findNameWithAddress();
+
+    @EntityGraph(attributePaths = {"phones"})
+    List<Employee> findDistinctByNameLike(String name);
 }

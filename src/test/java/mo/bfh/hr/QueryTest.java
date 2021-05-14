@@ -252,7 +252,31 @@ public class QueryTest {
         TypedQuery<Employee> queryWithParam = em.createQuery(sqlStringWithParameter, Employee.class);
         queryWithParam.setParameter("id", id);
          */
-
     }
+
+    @Test
+    public void employeeIncludePhonesJpql() {
+        TypedQuery<Employee> query = em.createQuery("select distinct e from Employee e left outer join fetch e.phones p", Employee.class);
+        List<Employee> list = query.getResultList();
+
+        assertEquals(6, list.size());
+    }
+
+    @Test
+    public void employeeIncludePhonesNamedEntityGraph() {
+        List<Employee> list = employeeRepository.findDistinctByNameLike("%");
+
+        assertEquals(6, list.size());
+    }
+
+    @Test
+    public void employeeIncludePhonesEntityGraph() {
+        TypedQuery<Employee> query = em.createQuery("select distinct e from Employee e", Employee.class);
+        query.setHint("javax.persistence.loadgraph", Employee.INCLUDE_PHONES);
+        List<Employee> list = query.getResultList();
+
+        assertEquals(6, list.size());
+    }
+
 
 }

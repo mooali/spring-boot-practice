@@ -1,18 +1,24 @@
 package mo.bfh.entity;
 
 
+import org.springframework.data.jpa.repository.EntityGraph;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
 @NamedQuery(name = Employee.MIN_SALARY, query = "select new mo.bfh.dto.EmployeeDTO(e.name, e.salary)" +
         "from Employee e where e.salary = " +
         "(select min(e.salary) from Employee e)" )
+@NamedEntityGraph(name = Employee.INCLUDE_PHONES, attributeNodes = {@NamedAttributeNode("phones")})
+@Entity
 public class Employee {
 
     public static final String MIN_SALARY = "Employee.minSalary";
+
+    public static final String INCLUDE_PHONES = "Employee.includePhones";
+
 
     @Id
     @SequenceGenerator(name = "emp_seq", sequenceName = "emp_seq")

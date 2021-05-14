@@ -29,7 +29,7 @@ public class Employee {
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "employee_id")
-    private Set<Phone> phoneSet = new HashSet<>();;
+    private Set<Phone> phones = new HashSet<>();;
 
     @ManyToMany (mappedBy = "employees",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private Set<Project> projects = new HashSet<>();;
@@ -74,12 +74,12 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Set<Phone> getPhoneSet() {
-        return phoneSet;
+    public Set<Phone> getPhones() {
+        return phones;
     }
 
-    public void setPhoneSet(Set<Phone> phoneSet) {
-        this.phoneSet = phoneSet;
+    public void setPhones(Set<Phone> phones) {
+        this.phones = phones;
     }
 
     public Department getDepartment() {
@@ -128,7 +128,7 @@ public class Employee {
     }
 
     public void addPhone(Phone phone){
-        phoneSet.add(phone);
+        phones.add(phone);
     }
 
     public void removeSupervisor(Employee employee){
@@ -137,7 +137,7 @@ public class Employee {
     }
 
     public void removePhone(Phone phone){
-        phoneSet.remove(phone);
+        phones.remove(phone);
     }
 
 }

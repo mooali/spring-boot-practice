@@ -45,8 +45,9 @@ public class QueryTest {
 
     }
 
-    /*
-    EX1
+    /**
+     * EX1
+     * Find all employees who live in the canton of Zurich
      */
     @Test
     public void findEmployeeByState(){
@@ -55,9 +56,9 @@ public class QueryTest {
 
     }
 
-
     /**
      * EX2
+     * Calculate the average salary of employees per department
      */
     @Test
     public void getAverageSalaryPerDepartment(){
@@ -77,9 +78,9 @@ public class QueryTest {
 
     }
 
-
     /**
      * EX2
+     * Calculate the average salary of employees per department
      */
     @Test
     public void getAverageSalaryPerDepartmentAsNamedQueryWithSpringData(){
@@ -95,9 +96,9 @@ public class QueryTest {
         }
     }
 
-
     /**
      * EX3
+     * Find the employee with the lowest salary
      */
 
     @Test
@@ -112,6 +113,7 @@ public class QueryTest {
 
     /**
      * EX3
+     * Find the employee with the lowest salary
      */
     @Test
     public void getMinSalaryPerEmployee(){
@@ -128,7 +130,9 @@ public class QueryTest {
     }
 
     /**
-     * EX3 Native SQL
+     * EX3
+     * Find the employee with the lowest salary
+     * Native SQL
      */
     @Test
     public void getMinSalaryPerEmployeeWithSql(){
@@ -141,16 +145,16 @@ public class QueryTest {
 
     }
 
-
     @Test
     public void findEmployeeByName(){
         List<Employee> employees = employeeRepository.findByNameLikeWithQuery("Luca Traugott");
         assertEquals("Luca Traugott", employees.get(0).getName());
     }
 
-
     /**
     * EX 4
+    * Create a query that returns the employee name and the complete address,
+    * ordered by the employee’s name
     * this result is danger, because we get address as an Entity, we could modify it but that's
     * not what we want
     * this query is bad
@@ -166,6 +170,8 @@ public class QueryTest {
 
     /**
      * EX4
+     * Create a query that returns the employee name and the complete address,
+     * ordered by the employee’s name
      * using interface projection
      * better
      */
@@ -180,10 +186,8 @@ public class QueryTest {
         });
     }
 
-
     /**
-     * EX5
-     * Employee without Project
+     * Ex5  Find employees who are not assigned to a project
      */
     @Test
     public void findAllEmployeesWithoutProject(){
@@ -194,9 +198,9 @@ public class QueryTest {
     }
 
     /**
-     * EX6
-     * Office Phone Numbers ordered by Number
+     * Ex6	Find all business phone numbers ordered by number
      */
+
     @Test
     public void findAllWorkPhonesOrderedByNumber(){
         TypedQuery<String> query = em.createQuery("select p.phoneNumber from Phone p" +
@@ -209,14 +213,46 @@ public class QueryTest {
 
     }
 
+    /**
+     * Ex 7 Find employees who do not have a business phone number yet
+     */
+   @Test
+    public void findAllEmployeWithoutWorkPhone(){
+        TypedQuery<Employee> query = em.createQuery("select e from Employee e where e not in" +
+                        " (select distinct e from Employee e join e.phones p where p.type = :type)",
+                Employee.class);
+       query.setParameter("type", PhoneType.OFFICE);
 
+        List<Employee> list = query.getResultList();
+        assertEquals(1, list.size());
+    }
 
+    /**
+     * SQL-Injection
+     */
+    @Test
+    public void sqlInjection(){
+        //Parameter from UI
+        String id = "1";
+        // SQL Injection
+        id += " OR 1 = 1";
 
+        String sqlString = "select e from Employee e where e.id = " + id;
 
+        TypedQuery<Employee> query = em.createQuery(sqlString, Employee.class);
+        List<Employee> list = query.getResultList();
 
+        //return all instead of only one Employee!!!!
+        assertEquals(6, list.size());
 
+        // thats why it's better to use Query Parameter (named) prepared statements
+        //Hibernate and JDBC will check for sql-injection
+        /*
+        String sqlStringWithParameter = "select e from Employee e where e.id = :id ";
+        TypedQuery<Employee> queryWithParam = em.createQuery(sqlStringWithParameter, Employee.class);
+        queryWithParam.setParameter("id", id);
+         */
 
-
-
+    }
 
 }

@@ -1,6 +1,5 @@
 package mo.bfh.hr;
 
-import mo.bfh.dto.DepartmentDTO;
 import mo.bfh.dto.DepartmentSalaryStatistics;
 import mo.bfh.dto.EmployeeDTO;
 import mo.bfh.dto.EmployeeNameWithAddress;
@@ -16,8 +15,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

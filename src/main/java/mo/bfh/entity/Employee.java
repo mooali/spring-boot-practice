@@ -7,7 +7,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name = Employee.MIN_SALARY, query = "select new mo.bfh.dto.EmployeeDTO(e.name, e.salary)" +
+        "from Employee e where e.salary = " +
+        "(select min(e.salary) from Employee e)" )
 public class Employee {
+
+    public static final String MIN_SALARY = "Employee.minSalary";
 
     @Id
     @SequenceGenerator(name = "emp_seq", sequenceName = "emp_seq")

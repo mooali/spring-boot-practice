@@ -1,6 +1,9 @@
 package mo.bfh.hr;
 
-import mo.bfh.entity.Employee;
+import mo.bfh.dto.DepartmentSalaryStatistics;
+import mo.bfh.entity.*;
+import mo.bfh.entity.Address_;
+import mo.bfh.entity.Employee_;
 import mo.bfh.repository.DepartmentRepository;
 import mo.bfh.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
@@ -11,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -42,4 +46,31 @@ public class CriteriaTest {
         assertEquals("Luca Traugott", list.get(0).getName());
 
     }
+
+
+
+    @Test
+    public void findAllZuercher() {
+        List<Employee> zuercher = employeeRepository.findAll((employee, cq, cb) -> {
+            Join<Employee, Address> address = employee.join(Employee_.address);
+            return cb.equal(address.get(Address_.state), "ZH");
+        });
+
+        assertEquals(3, zuercher.size());
+    }
+
+
+    @Test
+    public void getAvarageSalaryPerDept(){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<DepartmentSalaryStatistics> cq = cb.createQuery(DepartmentSalaryStatistics.class);
+
+        Root<DepartmentSalaryStatistics> root = cq.from(DepartmentSalaryStatistics.class);
+
+
+    }
+
+
+
+
 }

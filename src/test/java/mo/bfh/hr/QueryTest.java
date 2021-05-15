@@ -75,8 +75,6 @@ public class QueryTest {
                 assertEquals(95000.0, dept.getAvgSalary(),0);
             }
         }
-
-
     }
 
     /**

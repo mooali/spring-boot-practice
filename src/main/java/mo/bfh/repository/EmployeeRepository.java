@@ -15,7 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
 
     List<Employee> findByAddressState(String state);
 
-    Optional<Employee> findEmployeesByDepartmentName(String dept);
+    List<Employee> findEmployeesByDepartmentName(String dept);
 
     List<EmployeeDTO> minSalary();
 

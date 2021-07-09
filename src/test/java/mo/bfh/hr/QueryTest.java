@@ -19,9 +19,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 public class QueryTest {
@@ -93,6 +93,12 @@ public class QueryTest {
                 assertEquals(95000.0, dept.getAvgSalary(),0);
             }
         }
+    }
+
+    @Test
+    public void findEmployeeByDept(){
+        List<Employee> itEmployee = employeeRepository.findEmployeesByDepartmentName("IT");
+        assertEquals(5,itEmployee.size());
     }
 
     /**

@@ -82,9 +82,4 @@ public class EmployeeRepositoryTest {
         
     }
 
-
-    @Test
-    public void findEmployeeByDept(){
-        assertTrue(employeeRepository.findEmployeesByDepartmentName("IT").isPresent());
-    }
 }
